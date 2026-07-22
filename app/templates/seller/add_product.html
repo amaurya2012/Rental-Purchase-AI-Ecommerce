@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Add Product</h3>
+
+<form method="post" enctype="multipart/form-data">
+
+  <input name="name" class="form-control mb-2" placeholder="Product Name" required>
+  <textarea name="description" class="form-control mb-2" placeholder="Description" required></textarea>
+
+  <input name="purchase_price" class="form-control mb-2" placeholder="Purchase Price" required>
+  <input name="rental_price" class="form-control mb-2" placeholder="Rent / Day" required>
+  <input name="deposit" class="form-control mb-2" placeholder="Deposit" required>
+  <input name="quantity" class="form-control mb-2" placeholder="Stock Quantity" required>
+
+  <label>Category</label>
+  <select name="category_id" class="form-control mb-2" required>
+    {% for c in categories %}
+    <option value="{{ c.id }}">{{ c.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Product Image</label>
+  <input type="file" name="image" class="form-control mb-3" required>
+
+  <button class="btn btn-success w-100">Add Product</button>
+
+</form>
+
+{% endblock %}

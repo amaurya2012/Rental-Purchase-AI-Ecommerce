@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Rental Details</h3>
+
+<p><b>ID:</b> {{ rental.id }}</p>
+<p><b>User:</b> {{ rental.user_id }}</p>
+<p><b>Product:</b> {{ rental.product_id }}</p>
+
+<p><b>Start Date:</b> {{ rental.start_date }}</p>
+<p><b>End Date:</b> {{ rental.end_date }}</p>
+
+<p><b>Total Rent:</b> ₹{{ rental.total_rent }}</p>
+<p><b>Status:</b> {{ rental.rental_status }}</p>
+
+{% endblock %}

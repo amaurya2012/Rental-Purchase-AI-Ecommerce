@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">My Wishlist ❤️</h3>
+
+{% if items %}
+
+<div class="row">
+
+{% for item in items %}
+
+{% set product = products[item.product_id] %}
+
+<div class="col-md-3">
+
+<div class="card mb-3 p-2">
+
+<img src="{{ url_for('static', filename='uploads/' + product.image_filename) }}"
+     style="height:160px; object-fit:contain">
+
+<div class="card-body text-center">
+
+<h6>{{ product.name }}</h6>
+
+<p>₹{{ product.purchase_price }}</p>
+
+<a href="/product/{{ product.id }}"
+   class="btn btn-sm btn-primary w-100 mb-1">
+   View
+</a>
+
+<a href="/wishlist/remove/{{ item.id }}"
+   class="btn btn-sm btn-danger w-100">
+   Remove
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<p class="text-muted">Your wishlist is empty.</p>
+
+{% endif %}
+
+{% endblock %}

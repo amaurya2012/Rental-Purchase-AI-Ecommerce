@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+
+  <!-- PRODUCT IMAGE -->
+  <div class="col-md-5">
+    <img
+      src="{{ url_for('static', filename='uploads/' + product.image_filename) }}"
+      class="img-fluid"
+      style="max-height:400px; object-fit:contain;">
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="col-md-7">
+
+    <h3>{{ product.name }}</h3>
+    <p class="text-muted">{{ product.description }}</p>
+
+    <h4 class="mb-3">₹{{ product.purchase_price }}</h4>
+
+    <p>
+      <b>Rent/day:</b> ₹{{ product.rental_price_per_day }} <br>
+      <b>Deposit:</b> ₹{{ product.deposit_amount }}
+    </p>
+
+    <!-- ADD TO CART -->
+    <a href="/cart/add/{{ product.id }}"
+       class="btn btn-success w-100 mb-2">
+      Add to Cart
+    </a>
+
+    <!-- RENT -->
+    <a href="/rental/checkout/{{ product.id }}"
+       class="btn btn-warning w-100 mb-2">
+      Rent Now
+    </a>
+
+    <!-- WISHLIST -->
+    <a href="/wishlist/add/{{ product.id }}"
+       class="btn btn-outline-danger w-100">
+      ❤️ Add to Wishlist
+    </a>
+
+  </div>
+
+</div>
+
+<hr>
+
+<!-- REVIEWS SECTION -->
+<h5>Ratings & Reviews</h5>
+
+<form method="POST"
+      action="/product/review/add/{{ product.id }}"
+      class="mb-3">
+
+  <div class="row">
+
+    <div class="col-md-3">
+      <select name="rating" class="form-control" required>
+        <option value="">Rating</option>
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="1">⭐</option>
+      </select>
+    </div>
+
+    <div class="col-md-7">
+      <input type="text"
+             name="comment"
+             class="form-control"
+             placeholder="Write your review">
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-primary w-100">
+        Submit
+      </button>
+    </div>
+
+  </div>
+
+</form>
+
+
+<!-- SHOW REVIEWS -->
+{% if reviews %}
+<ul class="list-group">
+
+  {% for r in reviews %}
+  <li class="list-group-item">
+
+    <strong>⭐ {{ r.rating }}/5</strong>
+    <br>
+
+    {% if r.comment %}
+      {{ r.comment }}
+    {% else %}
+      <span class="text-muted">No comment</span>
+    {% endif %}
+
+  </li>
+  {% endfor %}
+
+</ul>
+
+{% else %}
+<p class="text-muted">No reviews yet.</p>
+{% endif %}
+
+{% endblock %}

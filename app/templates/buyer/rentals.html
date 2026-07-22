@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">My Rentals</h3>
+
+{% if rentals %}
+<table class="table table-bordered align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Product</th>
+      <th>Period</th>
+      <th>Rent</th>
+      <th>Deposit</th>
+      <th>Payment</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for r in rentals %}
+      {% set p = products[r.product_id] %}
+      <tr>
+        <td>
+          <a href="/product/{{ p.id }}" class="fw-semibold">
+            {{ p.name }}
+          </a>
+        </td>
+
+        <td>
+          {{ r.start_date.strftime('%d-%m-%Y') }}
+          →
+          {{ r.end_date.strftime('%d-%m-%Y') }}
+        </td>
+
+        <td>₹{{ r.total_rent }}</td>
+        <td>₹{{ r.deposit_paid }}</td>
+
+        <td>
+          {{ r.payment_method }} /
+          {{ r.payment_status }}
+        </td>
+
+        <td>
+          {% if r.rental_status == "ACTIVE" %}
+            <span class="badge bg-warning text-dark">ACTIVE</span>
+          {% elif r.rental_status == "RETURNED" %}
+            <span class="badge bg-success">RETURNED</span>
+          {% else %}
+            <span class="badge bg-secondary">{{ r.rental_status }}</span>
+          {% endif %}
+        </td>
+
+        <td>
+          {% if r.rental_status == "ACTIVE" %}
+            <a href="/rental/return/{{ r.id }}"
+               class="btn btn-sm btn-warning">
+              Return
+            </a>
+          {% else %}
+            Completed
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">
+  You have no rentals yet.
+</div>
+{% endif %}
+
+{% endblock %}

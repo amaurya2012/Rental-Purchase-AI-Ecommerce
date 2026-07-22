@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Add Category</h3>
+
+<form method="post">
+  <input type="text" name="name" class="form-control mb-3"
+         placeholder="Category Name" required>
+
+  <button class="btn btn-success">Create Category</button>
+  <a href="/seller/categories" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}

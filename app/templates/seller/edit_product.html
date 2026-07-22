@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Edit Product</h3>
+
+<form method="post" enctype="multipart/form-data">
+
+  <input name="name" value="{{ product.name }}" class="form-control mb-2" required>
+  <textarea name="description" class="form-control mb-2" required>{{ product.description }}</textarea>
+
+  <input name="purchase_price" value="{{ product.purchase_price }}" class="form-control mb-2" required>
+  <input name="rental_price" value="{{ product.rental_price_per_day }}" class="form-control mb-2" required>
+  <input name="deposit" value="{{ product.deposit_amount }}" class="form-control mb-2" required>
+  <input name="quantity" value="{{ product.quantity_available }}" class="form-control mb-2" required>
+
+  <select name="category_id" class="form-control mb-2">
+    {% for c in categories %}
+    <option value="{{ c.id }}"
+      {% if c.id == product.category_id %}selected{% endif %}>
+      {{ c.name }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <label>Update Image (optional)</label>
+  <input type="file" name="image" class="form-control mb-3">
+
+  <button class="btn btn-primary">Update Product</button>
+  <a href="/seller/my-products" class="btn btn-secondary">Cancel</a>
+
+</form>
+
+{% endblock %}

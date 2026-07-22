@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">Seller Dashboard</h3>
+
+<div class="mb-3">
+  <a href="/seller/product/add" class="btn btn-success">+ Add Product</a>
+  <a href="/seller/categories" class="btn btn-primary ms-2">Manage Categories</a>
+</div>
+
+<hr>
+
+<!-- ================= PRODUCTS ================= -->
+<h5>My Products</h5>
+
+{% if products %}
+<table class="table table-bordered mb-4">
+  <thead class="table-light">
+    <tr>
+      <th>Name</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.quantity_available }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">No products added yet.</p>
+{% endif %}
+
+<hr>
+
+<!-- ================= ORDERS ================= -->
+<h5>Orders</h5>
+
+{% if orders %}
+<table class="table table-bordered mb-4">
+  <thead class="table-light">
+    <tr>
+      <th>Order ID</th>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Amount</th>
+      <th>Delivery</th>
+      <th>Status</th>
+      <th>Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for o in orders %}
+      {% set addr = addresses.get(o.id) %}
+      <tr>
+        <td>#{{ o.id }}</td>
+        <td>{{ products_map[o.product_id].name }}</td>
+        <td>{{ o.quantity }}</td>
+        <td>₹{{ o.total_amount }}</td>
+        <td>
+          {% if addr %}
+            {{ addr.full_name }}<br>
+            📞 {{ addr.phone }}<br>
+            {{ addr.city }} - {{ addr.pincode }}
+          {% else %}
+            <span class="text-muted">N/A</span>
+          {% endif %}
+        </td>
+        <td>{{ o.order_status }}</td>
+        <td>
+          <form method="post" action="/seller/order/update/{{ o.id }}">
+            <select name="status" class="form-control form-control-sm mb-1">
+              <option {% if o.order_status=='PLACED' %}selected{% endif %}>PLACED</option>
+              <option {% if o.order_status=='SHIPPED' %}selected{% endif %}>SHIPPED</option>
+              <option {% if o.order_status=='DELIVERED' %}selected{% endif %}>DELIVERED</option>
+            </select>
+            <button class="btn btn-sm btn-primary w-100">Update</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">No orders yet.</p>
+{% endif %}
+
+<hr>
+
+<!-- ================= RENTALS ================= -->
+<h5>Rentals</h5>
+
+{% if rentals %}
+<table class="table table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Product</th>
+      <th>Period</th>
+      <th>Rent</th>
+      <th>Deposit</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rentals %}
+    <tr>
+      <td>#{{ r.id }}</td>
+      <td>{{ products_map[r.product_id].name }}</td>
+      <td>{{ r.start_date }} → {{ r.end_date }}</td>
+      <td>₹{{ r.total_rent }}</td>
+      <td>₹{{ r.deposit_paid }}</td>
+      <td>{{ r.rental_status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">No rentals yet.</p>
+{% endif %}
+
+{% endblock %}

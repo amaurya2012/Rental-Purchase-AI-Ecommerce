@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">My Orders</h3>
+
+{% if orders %}
+<table class="table table-striped table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Order ID</th>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Total Amount</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for o in orders %}
+      {% set p = products[o.product_id] %}
+      <tr>
+        <td>#{{ o.id }}</td>
+
+        <td>
+          <a href="/product/{{ p.id }}" class="fw-semibold text-decoration-none">
+            {{ p.name }}
+          </a>
+        </td>
+
+        <td>{{ o.quantity }}</td>
+
+        <td>₹{{ o.total_amount }}</td>
+
+        <td>
+          <span class="badge bg-primary">
+            {{ o.order_status }}
+          </span>
+        </td>
+
+        <td>{{ o.created_at.strftime('%d-%m-%Y') }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">
+  You have not placed any orders yet.
+</div>
+{% endif %}
+
+{% endblock %}

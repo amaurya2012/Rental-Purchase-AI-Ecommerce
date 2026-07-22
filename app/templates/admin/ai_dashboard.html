@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">AI Analytics Dashboard</h3>
+
+<div class="row">
+
+<!-- TOP SELLING -->
+<div class="col-md-6">
+<div class="card p-3 mb-3">
+
+<h5>🔥 Top Selling Products</h5>
+
+<ul>
+{% for p in top_products %}
+<li>{{ p[0] }} — {{ p[1] }} sales</li>
+{% endfor %}
+</ul>
+
+</div>
+</div>
+
+
+<!-- MOST RENTED -->
+<div class="col-md-6">
+<div class="card p-3 mb-3">
+
+<h5>📦 Most Rented Products</h5>
+
+<ul>
+{% for r in rentals %}
+<li>{{ r[0] }} — {{ r[1] }} rentals</li>
+{% endfor %}
+</ul>
+
+</div>
+</div>
+
+
+<!-- HIGHEST RATED -->
+<div class="col-md-6">
+<div class="card p-3 mb-3">
+
+<h5>⭐ Highest Rated Products</h5>
+
+<ul>
+{% for r in ratings %}
+<li>{{ r[0] }} — {{ "%.2f"|format(r[1]) }} ⭐</li>
+{% endfor %}
+</ul>
+
+</div>
+</div>
+
+
+<!-- MOST ACTIVE USERS -->
+<div class="col-md-6">
+<div class="card p-3 mb-3">
+
+<h5>👤 Most Active Users</h5>
+
+<ul>
+{% for u in users %}
+<li>{{ u[0] }} — {{ u[1] }} orders</li>
+{% endfor %}
+</ul>
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

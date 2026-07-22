@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">Available Products</h3>
+
+<!-- ================= SEARCH & SORT ================= -->
+<form method="get" class="row mb-4">
+
+  <div class="col-md-4">
+    <input type="text"
+           name="search"
+           value="{{ search or '' }}"
+           class="form-control"
+           placeholder="Search products...">
+  </div>
+
+  <div class="col-md-3">
+    <select name="sort" class="form-control">
+
+      <option value="">Sort by Price</option>
+
+      <option value="low"
+        {% if sort=='low' %}selected{% endif %}>
+        Low → High
+      </option>
+
+      <option value="high"
+        {% if sort=='high' %}selected{% endif %}>
+        High → Low
+      </option>
+
+    </select>
+  </div>
+
+  <div class="col-md-2">
+    <button class="btn btn-primary w-100">
+      Apply
+    </button>
+  </div>
+
+</form>
+
+
+<div class="row">
+
+<!-- ================= CATEGORY FILTER ================= -->
+<div class="col-md-3">
+
+<div class="card mb-4 p-3">
+
+<h5 class="mb-3">Categories</h5>
+
+<ul class="list-group">
+
+<a href="/buyer/dashboard"
+class="list-group-item list-group-item-action
+{% if not selected_category %}active{% endif %}">
+All Products
+</a>
+
+{% for c in categories %}
+
+<a href="/buyer/dashboard?category={{ c.id }}"
+class="list-group-item list-group-item-action
+{% if selected_category == c.id|string %}active{% endif %}">
+
+{{ c.name }}
+
+</a>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- ================= PRODUCT GRID ================= -->
+<div class="col-md-9">
+
+<div class="row">
+
+{% for p in products %}
+
+<div class="col-md-4">
+
+<div class="card mb-4 p-2 h-100">
+
+<img src="{{ url_for('static', filename='uploads/' + p.image_filename) }}"
+style="height:180px; object-fit:contain;"
+class="card-img-top">
+
+<div class="card-body text-center">
+
+<h6>{{ p.name }}</h6>
+
+<p class="mb-1">
+<b>Buy:</b> ₹{{ p.purchase_price }}
+</p>
+
+<p class="text-muted mb-2">
+<b>Rent/day:</b> ₹{{ p.rental_price_per_day }}
+</p>
+
+<a href="/product/{{ p.id }}"
+class="btn btn-primary btn-sm w-100 mb-2">
+View Details
+</a>
+
+<a href="/wishlist/add/{{ p.id }}"
+class="btn btn-outline-danger btn-sm w-100">
+❤️ Wishlist
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% if not products %}
+
+<div class="col-12">
+
+<div class="alert alert-info text-center">
+No products available.
+</div>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= AI RECOMMENDATIONS ================= -->
+{% if recommended %}
+
+<hr>
+
+<h4 class="mt-4">🤖 Recommended For You</h4>
+
+<div class="row">
+
+{% for p in recommended %}
+
+<div class="col-md-3">
+
+<div class="card p-2 mb-3">
+
+<img src="{{ url_for('static', filename='uploads/' + p.image_filename) }}"
+style="height:150px; object-fit:contain;">
+
+<div class="card-body text-center">
+
+<h6>{{ p.name }}</h6>
+
+<a href="/product/{{ p.id }}"
+class="btn btn-sm btn-outline-primary w-100">
+View
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+
+<!-- ================= WISHLIST RECOMMEND ================= -->
+{% if wishlist_recommend %}
+
+<hr>
+
+<h4 class="mt-4">❤️ Based on Your Wishlist</h4>
+
+<div class="row">
+
+{% for p in wishlist_recommend %}
+
+<div class="col-md-3">
+
+<div class="card p-2 mb-3">
+
+<img src="{{ url_for('static', filename='uploads/' + p.image_filename) }}"
+style="height:150px; object-fit:contain;">
+
+<div class="card-body text-center">
+
+<h6>{{ p.name }}</h6>
+
+<a href="/product/{{ p.id }}"
+class="btn btn-sm btn-outline-primary w-100">
+View
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}

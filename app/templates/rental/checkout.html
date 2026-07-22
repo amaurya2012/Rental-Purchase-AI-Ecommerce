@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-3">Rental Checkout</h3>
+
+<div class="card p-4">
+
+  <h5>{{ product.name }}</h5>
+  <p>
+    Rent / Day: ₹{{ product.rental_price_per_day }} <br>
+    Deposit: ₹{{ product.deposit_amount }}
+  </p>
+
+  <form method="post">
+
+    <!-- RENTAL DATES -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Start Date</label>
+        <input type="date" name="start_date" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>End Date</label>
+        <input type="date" name="end_date" class="form-control" required>
+      </div>
+    </div>
+
+    <hr>
+
+    <!-- DELIVERY ADDRESS -->
+    <h6>Delivery Address</h6>
+    <input name="full_name" class="form-control mb-2" placeholder="Full Name" required>
+    <input name="phone" class="form-control mb-2" placeholder="Phone" required>
+    <textarea name="address_line" class="form-control mb-2" placeholder="Address" required></textarea>
+    <input name="city" class="form-control mb-2" placeholder="City" required>
+    <input name="state" class="form-control mb-2" placeholder="State" required>
+    <input name="pincode" class="form-control mb-2" placeholder="Pincode" required>
+
+    <hr>
+
+    <!-- PAYMENT -->
+    <h6>Payment Method</h6>
+    <select name="payment_method" class="form-control mb-3">
+      <option value="COD">Cash on Delivery</option>
+      <option value="CARD">Card</option>
+      <option value="UPI">UPI</option>
+    </select>
+
+    <button class="btn btn-warning w-100">
+      Confirm Rental
+    </button>
+
+  </form>
+
+</div>
+
+{% endblock %}

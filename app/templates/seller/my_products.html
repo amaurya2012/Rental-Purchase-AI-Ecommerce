@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-3">My Products</h3>
+
+<a href="/product/add" class="btn btn-success mb-3">
+  + Add Product
+</a>
+
+<table class="table table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th width="160">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for p in products %}
+    <tr>
+      <td>
+        {% if p.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' + p.image_filename) }}"
+             width="60">
+        {% else %}
+        <span class="text-muted">No Image</span>
+        {% endif %}
+      </td>
+
+      <td>{{ p.name }}</td>
+
+      <!-- ✅ SAFE CATEGORY LOOKUP -->
+      <td>
+        {{ category_map[p.category_id].name }}
+      </td>
+
+      <td>₹{{ p.purchase_price }}</td>
+      <td>{{ p.quantity_available }}</td>
+
+      <td>
+        <a href="/product/edit/{{ p.id }}"
+           class="btn btn-sm btn-warning">
+          Edit
+        </a>
+
+        <a href="/product/delete/{{ p.id }}"
+           class="btn btn-sm btn-danger"
+           onclick="return confirm('Delete product?')">
+          Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if not products %}
+<p class="text-muted">No products added yet.</p>
+{% endif %}
+
+{% endblock %}

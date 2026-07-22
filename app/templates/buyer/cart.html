@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4">My Cart</h3>
+
+{% if products %}
+<table class="table table-bordered align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Subtotal</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for item in products %}
+      <tr>
+        <td>
+          <strong>{{ item.product.name }}</strong><br>
+          <a href="/product/{{ item.product.id }}"
+             class="btn btn-sm btn-outline-primary mt-1">
+            View Details
+          </a>
+        </td>
+
+        <td>
+          <a href="/cart/decrease/{{ item.item_id }}"
+             class="btn btn-sm btn-outline-secondary">−</a>
+
+          <span class="mx-2">{{ item.quantity }}</span>
+
+          <a href="/cart/increase/{{ item.item_id }}"
+             class="btn btn-sm btn-outline-secondary">+</a>
+        </td>
+
+        <td>₹{{ item.subtotal }}</td>
+
+        <td>
+          <a href="/cart/remove/{{ item.item_id }}"
+             class="btn btn-sm btn-danger">
+            Remove
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="text-end">
+  <h4>Total: ₹{{ total }}</h4>
+  <a href="/order/checkout" class="btn btn-success btn-lg mt-2">
+    Proceed to Checkout
+  </a>
+</div>
+
+{% else %}
+<div class="alert alert-info">
+  Your cart is empty.
+</div>
+{% endif %}
+
+{% endblock %}

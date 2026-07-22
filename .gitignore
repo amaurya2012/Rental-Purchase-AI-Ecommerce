@@ -1,0 +1,45 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+database/ecommerce.db
+
+# Uploads (agar test/dummy images hain jo push nahi karni)
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Flask
+instance/
+.flaskenv
+
+# Logs
+*.log
+
+__pycache__/
+*.pyc
+*.db
+.env
+venv/

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Product Details</h3>
+
+<div class="row">
+
+<div class="col-md-5">
+<img src="{{ url_for('static', filename='uploads/' + product.image_filename) }}"
+class="img-fluid">
+</div>
+
+<div class="col-md-7">
+
+<h4>{{ product.name }}</h4>
+
+<p>{{ product.description }}</p>
+
+<p><b>Price:</b> ₹{{ product.purchase_price }}</p>
+
+<p><b>Rent/day:</b> ₹{{ product.rental_price_per_day }}</p>
+
+<p><b>Deposit:</b> ₹{{ product.deposit_amount }}</p>
+
+<p><b>Stock:</b> {{ product.quantity_available }}</p>
+
+<p><b>Seller:</b> {{ product.seller_id }}</p>
+
+</div>
+
+</div>
+
+{% endblock %}

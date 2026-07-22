@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Order Details</h3>
+
+<p><b>Order ID:</b> {{ order.id }}</p>
+<p><b>User:</b> {{ order.user_id }}</p>
+<p><b>Product:</b> {{ order.product_id }}</p>
+<p><b>Total:</b> ₹{{ order.total_amount }}</p>
+<p><b>Status:</b> {{ order.order_status }}</p>
+
+{% if address %}
+<hr>
+
+<h5>Delivery Address</h5>
+
+<p>{{ address.full_name }}</p>
+<p>{{ address.mobile }}</p>
+<p>{{ address.address_line }}</p>
+<p>{{ address.city }} - {{ address.pincode }}</p>
+
+{% endif %}
+
+{% endblock %}

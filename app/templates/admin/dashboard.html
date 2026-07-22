@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-4 fw-bold">Admin Dashboard</h3>
+
+<div class="row g-4">
+
+<div class="col-md-3">
+<div class="card bg-primary text-white text-center p-3 shadow">
+<h6>Total Users</h6>
+<h2>{{ users }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card bg-success text-white text-center p-3 shadow">
+<h6>Total Products</h6>
+<h2>{{ products }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card bg-warning text-white text-center p-3 shadow">
+<h6>Total Orders</h6>
+<h2>{{ orders }}</h2>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card bg-danger text-white text-center p-3 shadow">
+<h6>Total Rentals</h6>
+<h2>{{ rentals }}</h2>
+</div>
+</div>
+
+</div>
+
+
+<!-- ================= CHARTS ================= -->
+
+<div class="row mt-5">
+
+<div class="col-md-6">
+
+<div class="card shadow p-3">
+
+<h5 class="mb-3">Orders vs Rentals</h5>
+
+<canvas id="orderChart"></canvas>
+
+</div>
+
+</div>
+
+
+<div class="col-md-6">
+
+<div class="card shadow p-3">
+
+<h5 class="mb-3">Platform Overview</h5>
+
+<canvas id="platformChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= AI ANALYTICS ================= -->
+
+<div class="card mt-5 shadow-sm border-0">
+
+<div class="card-body">
+
+<h5>AI Insights</h5>
+
+<p class="text-muted">
+
+View intelligent analytics about sales trends,
+rental demand, and active users.
+
+</p>
+
+<a href="/admin/ai-dashboard" class="btn btn-primary">
+
+View AI Analytics
+
+</a>
+
+</div>
+
+</div>
+
+
+
+<!-- ================= CHART JS ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+/* Orders vs Rentals Chart */
+
+const orderCtx = document.getElementById('orderChart');
+
+new Chart(orderCtx, {
+
+type: 'bar',
+
+data: {
+
+labels: ['Orders','Rentals'],
+
+datasets: [{
+
+label: 'Transactions',
+
+data: [{{ orders }}, {{ rentals }}],
+
+backgroundColor: [
+
+'#2874f0',
+
+'#ff9f00'
+
+]
+
+}]
+
+},
+
+options: {
+
+responsive: true
+
+}
+
+});
+
+
+/* Platform Overview Chart */
+
+const platformCtx = document.getElementById('platformChart');
+
+new Chart(platformCtx, {
+
+type: 'pie',
+
+data: {
+
+labels: ['Users','Products','Reviews'],
+
+datasets: [{
+
+data: [{{ users }}, {{ products }}, {{ reviews }}],
+
+backgroundColor: [
+
+'#4caf50',
+
+'#2196f3',
+
+'#ff5252'
+
+]
+
+}]
+
+},
+
+options: {
+
+responsive: true
+
+}
+
+});
+
+</script>
+
+{% endblock %}
